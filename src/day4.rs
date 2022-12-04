@@ -2,7 +2,7 @@ use crate::common::read_file;
 use std::collections::HashSet;
 
 fn parse_range(range: String) -> (i32, i32) {
-    match range.split("-").collect::<Vec<&str>>()[..] {
+    match range.split('-').collect::<Vec<&str>>()[..] {
         [n1, n2] => (n1.parse().unwrap(), n2.parse().unwrap()),
         _ => panic!("Wrong format"),
     }
@@ -16,62 +16,42 @@ fn expand_range(range: String) -> HashSet<i32> {
 fn range_contains_another(range1: (i32, i32), range2: (i32, i32)) -> bool {
     let (left1, right1) = range1;
     let (left2, right2) = range2;
-    if left1 >= left2 && right1 <= right2 {
-        return true;
-    } else if left2 >= left1 && right2 <= right1 {
-        return true;
-    } else {
-        return false;
-    }
+    left1 >= left2 && right1 <= right2 || left2 >= left1 && right2 <= right1
 }
 
 fn ranges_overlap(range1: HashSet<i32>, range2: HashSet<i32>) -> bool {
-    match range1.intersection(&range2).next() {
-        Some(_) => return true,
-        None => match range2.intersection(&range1).next() {
-            Some(_) => return true,
-            None => return false,
-        },
-    }
+    range1.intersection(&range2).next().is_some()
+}
+
+fn count_matches(data: Vec<String>, fun: impl Fn(String, String) -> bool) -> i32 {
+    data.iter()
+        .map(|pair| match pair.split(',').collect::<Vec<&str>>()[..] {
+            [r1, r2] if fun(r1.to_string(), r2.to_string()) => 1,
+            _ => 0,
+        })
+        .sum()
 }
 
 fn count_containing_matches(data: Vec<String>) -> i32 {
-    let mut result = 0;
-    data.iter()
-        .for_each(|pair| match pair.split(",").collect::<Vec<&str>>()[..] {
-            [r1, r2] => {
-                if range_contains_another(parse_range(r1.to_string()), parse_range(r2.to_string()))
-                {
-                    result += 1;
-                }
-            }
-            _ => (),
-        });
-    result
+    count_matches(data, |r1, r2| {
+        range_contains_another(parse_range(r1), parse_range(r2))
+    })
 }
 
-fn count_overlaping_matches(data: Vec<String>) -> i32 {
-    let mut result = 0;
-    data.iter()
-        .for_each(|pair| match pair.split(",").collect::<Vec<&str>>()[..] {
-            [r1, r2] => {
-                if ranges_overlap(expand_range(r1.to_string()), expand_range(r2.to_string())) {
-                    result += 1;
-                }
-            }
-            _ => (),
-        });
-    result
+fn count_overlapping_matches(data: Vec<String>) -> i32 {
+    count_matches(data, |r1, r2| {
+        ranges_overlap(expand_range(r1), expand_range(r2))
+    })
 }
 
-pub fn run_part1() -> i32 {
-    let data = read_file("data/day4.txt");
-    count_containing_matches(data)
+pub fn run_part1(path: String) -> i64 {
+    let data = read_file(path);
+    count_containing_matches(data) as i64
 }
 
-pub fn run_part2() -> i32 {
-    let data = read_file("data/day4.txt");
-    count_overlaping_matches(data)
+pub fn run_part2(path: String) -> i64 {
+    let data = read_file(path);
+    count_overlapping_matches(data) as i64
 }
 
 #[cfg(test)]
@@ -101,6 +81,6 @@ mod tests {
             "6-6,4-6".to_string(),
             "2-6,4-8".to_string(),
         ];
-        assert_eq!(count_overlaping_matches(data), 4);
+        assert_eq!(count_overlapping_matches(data), 4);
     }
 }

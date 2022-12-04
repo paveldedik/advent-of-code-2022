@@ -11,14 +11,14 @@ fn calc_calories(data: Vec<String>) -> Vec<i64> {
     result
 }
 
-pub fn run_part1() -> i64 {
-    let data = read_file("data/day1.txt");
+pub fn run_part1(path: String) -> i64 {
+    let data = read_file(path);
     let calories = calc_calories(data);
     *calories.iter().max().unwrap_or(&0)
 }
 
-pub fn run_part2() -> i64 {
-    let data = read_file("data/day1.txt");
+pub fn run_part2(path: String) -> i64 {
+    let data = read_file(path);
     let mut calories = calc_calories(data);
     calories.sort_by(|a, b| b.cmp(a));
 
@@ -41,6 +41,6 @@ mod tests {
 
     #[test]
     fn test_day1() {
-        println!("{}", run_part1());
+        println!("{}", run_part1("data/day1.txt".to_string()));
     }
 }

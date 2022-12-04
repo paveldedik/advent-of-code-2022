@@ -1,17 +1,17 @@
 use crate::common::read_file;
 use core::panic;
 
-fn read_file_and_split(path: &'static str) -> Vec<(String, String)> {
+fn read_file_and_split(path: String) -> Vec<(String, String)> {
     read_file(path)
         .iter()
-        .filter_map(|s| match s.split(" ").collect::<Vec<&str>>()[..] {
+        .filter_map(|s| match s.split(' ').collect::<Vec<&str>>()[..] {
             [a, b] => Some((a.to_string(), b.to_string())),
             _ => None,
         })
         .collect::<Vec<(String, String)>>()
 }
 
-fn get_score(a: String, b: String) -> i32 {
+fn get_score(a: String, b: String) -> i64 {
     let mut score = 0;
     match b.as_str() {
         "X" => score += 1,
@@ -44,18 +44,18 @@ fn map_selected(data: Vec<(String, String)>) -> Vec<(String, String)> {
         .collect::<Vec<(String, String)>>()
 }
 
-fn get_scores(data: Vec<(String, String)>) -> i32 {
+fn get_scores(data: Vec<(String, String)>) -> i64 {
     data.iter()
         .fold(0, |curr, (a, b)| curr + get_score(a.clone(), b.clone()))
 }
 
-pub fn run_part1() -> i32 {
-    let data = read_file_and_split("./data/day2.txt");
+pub fn run_part1(path: String) -> i64 {
+    let data = read_file_and_split(path);
     get_scores(data)
 }
 
-pub fn run_part2() -> i32 {
-    let data = read_file_and_split("./data/day2.txt");
+pub fn run_part2(path: String) -> i64 {
+    let data = read_file_and_split(path);
     get_scores(map_selected(data))
 }
 
@@ -71,7 +71,7 @@ mod tests {
             (String::from("C"), String::from("Z")),
         ];
         assert_eq!(get_scores(data), 15);
-        assert_eq!(run_part1(), 12645);
+        assert_eq!(run_part1("data/day2.txt".to_string()), 12645);
     }
 
     #[test]
@@ -82,6 +82,6 @@ mod tests {
             (String::from("C"), String::from("Z")),
         ];
         assert_eq!(get_scores(map_selected(data)), 12);
-        assert_eq!(run_part2(), 11756);
+        assert_eq!(run_part2("data/day2.txt".to_string()), 11756);
     }
 }
