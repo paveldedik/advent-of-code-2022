@@ -11,13 +11,13 @@ fn calc_calories(data: Vec<String>) -> Vec<i64> {
     result
 }
 
-pub fn run_part1(path: String) -> i64 {
+pub fn run_part1(path: String) -> String {
     let data = read_file(path);
     let calories = calc_calories(data);
-    *calories.iter().max().unwrap_or(&0)
+    (*calories.iter().max().unwrap_or(&0)).to_string()
 }
 
-pub fn run_part2(path: String) -> i64 {
+pub fn run_part2(path: String) -> String {
     let data = read_file(path);
     let mut calories = calc_calories(data);
     calories.sort_by(|a, b| b.cmp(a));
@@ -32,7 +32,7 @@ pub fn run_part2(path: String) -> i64 {
         }
     }
 
-    result
+    result.to_string()
 }
 
 #[cfg(test)]

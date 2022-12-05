@@ -49,14 +49,14 @@ fn get_scores(data: Vec<(String, String)>) -> i64 {
         .fold(0, |curr, (a, b)| curr + get_score(a.clone(), b.clone()))
 }
 
-pub fn run_part1(path: String) -> i64 {
+pub fn run_part1(path: String) -> String {
     let data = read_file_and_split(path);
-    get_scores(data)
+    get_scores(data).to_string()
 }
 
-pub fn run_part2(path: String) -> i64 {
+pub fn run_part2(path: String) -> String {
     let data = read_file_and_split(path);
-    get_scores(map_selected(data))
+    get_scores(map_selected(data)).to_string()
 }
 
 #[cfg(test)]
@@ -71,7 +71,7 @@ mod tests {
             (String::from("C"), String::from("Z")),
         ];
         assert_eq!(get_scores(data), 15);
-        assert_eq!(run_part1("data/day2.txt".to_string()), 12645);
+        assert_eq!(run_part1("data/day2.txt".to_string()), "12645");
     }
 
     #[test]
@@ -82,6 +82,6 @@ mod tests {
             (String::from("C"), String::from("Z")),
         ];
         assert_eq!(get_scores(map_selected(data)), 12);
-        assert_eq!(run_part2("data/day2.txt".to_string()), 11756);
+        assert_eq!(run_part2("data/day2.txt".to_string()), "11756");
     }
 }

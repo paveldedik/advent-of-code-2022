@@ -60,12 +60,12 @@ fn group_by(data: Vec<String>, groups: usize) -> Vec<Vec<String>> {
     result
 }
 
-pub fn run_part1(path: String) -> i64 {
+pub fn run_part1(path: String) -> String {
     let data = read_file_maybe_split(path, true);
-    find_commons(group_by(data, 2))
+    find_commons(group_by(data, 2)).to_string()
 }
 
-pub fn run_part2(path: String) -> i64 {
+pub fn run_part2(path: String) -> String {
     let data = read_file_maybe_split(path, false);
-    find_commons(group_by(data, 3))
+    find_commons(group_by(data, 3)).to_string()
 }

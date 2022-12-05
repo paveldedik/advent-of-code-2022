@@ -44,14 +44,14 @@ fn count_overlapping_matches(data: Vec<String>) -> i32 {
     })
 }
 
-pub fn run_part1(path: String) -> i64 {
+pub fn run_part1(path: String) -> String {
     let data = read_file(path);
-    count_containing_matches(data) as i64
+    count_containing_matches(data).to_string()
 }
 
-pub fn run_part2(path: String) -> i64 {
+pub fn run_part2(path: String) -> String {
     let data = read_file(path);
-    count_overlapping_matches(data) as i64
+    count_overlapping_matches(data).to_string()
 }
 
 #[cfg(test)]
