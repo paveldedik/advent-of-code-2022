@@ -53,7 +53,7 @@ impl Cargo {
         }
     }
 
-    fn get_top(&mut self) -> String {
+    fn get_top(&self) -> String {
         self.stacks
             .iter()
             .map(|stack| stack[stack.len() - 1])

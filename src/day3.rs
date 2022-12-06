@@ -30,7 +30,7 @@ fn find_common(data: &[String]) -> char {
         letters = HashSet::from_iter(
             letters
                 .intersection(&HashSet::from_iter(line.chars()))
-                .copied()
+                .copied(),
         );
     });
     *letters.iter().next().unwrap()

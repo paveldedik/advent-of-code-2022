@@ -3,6 +3,7 @@ use advent_of_code::day2;
 use advent_of_code::day3;
 use advent_of_code::day4;
 use advent_of_code::day5;
+use advent_of_code::day6;
 
 type RunPart = fn(String) -> String;
 
@@ -13,9 +14,14 @@ fn main() {
         ("day3", day3::run_part1, day3::run_part2),
         ("day4", day4::run_part1, day4::run_part2),
         ("day5", day5::run_part1, day5::run_part2),
+        ("day6", day6::run_part1, day6::run_part2),
     ];
     for (name, part1, part2) in days {
         let path = format!("data/{name}.txt");
-        println!("{name} result part1: {}, part2: {}", part1(path.clone()), part2(path))
+        println!(
+            "{name} result part1: {}, part2: {}",
+            part1(path.clone()),
+            part2(path)
+        )
     }
 }
