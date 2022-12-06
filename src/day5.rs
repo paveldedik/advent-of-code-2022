@@ -56,7 +56,7 @@ impl Cargo {
     fn get_top(&self) -> String {
         self.stacks
             .iter()
-            .map(|stack| stack[stack.len() - 1])
+            .map(|stack| stack.last().unwrap())
             .collect::<String>()
     }
 }
