@@ -6,6 +6,7 @@ use advent_of_code::day5;
 use advent_of_code::day6;
 use advent_of_code::day7;
 use advent_of_code::day8;
+use advent_of_code::day9;
 
 type RunPart = fn(String) -> String;
 
@@ -19,6 +20,7 @@ fn main() {
         ("day6", day6::run_part1, day6::run_part2),
         ("day7", day7::run_part1, day7::run_part2),
         ("day8", day8::run_part1, day8::run_part2),
+        ("day9", day9::run_part1, day9::run_part2),
     ];
     for (name, part1, part2) in days {
         let path = format!("data/{name}.txt");
