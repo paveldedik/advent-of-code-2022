@@ -150,20 +150,4 @@ mod tests {
         load_cargo(&mut cargo, data.clone(), true);
         assert_eq!(cargo.get_top(), "MCD".to_string());
     }
-
-    #[test]
-    fn test_part1() {
-        assert_eq!(
-            run_part1("data/day5.txt".to_string()),
-            "QGTHFZBHV".to_string()
-        )
-    }
-
-    #[test]
-    fn test_part2() {
-        assert_eq!(
-            run_part2("data/day5.txt".to_string()),
-            "MGDMPSZTM".to_string()
-        )
-    }
 }

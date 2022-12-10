@@ -57,9 +57,9 @@ impl Playground {
         }
     }
 
-    fn update_head_position(&mut self, instruction: &String) {
+    fn update_head_position(&mut self, instruction: &str) {
         let head = self.knots[0];
-        self.knots[0] = match instruction.as_str() {
+        self.knots[0] = match instruction {
             "U" => (head.0 - 1, head.1),
             "D" => (head.0 + 1, head.1),
             "L" => (head.0, head.1 - 1),

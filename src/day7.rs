@@ -46,7 +46,7 @@ impl Content {
             Some(size) => size,
             None => {
                 let mut result = 0;
-                for (_, content) in &self.content {
+                for content in self.content.values() {
                     result += content.count_bytes();
                 }
                 result
@@ -95,7 +95,10 @@ impl FileSystem {
 
         let dir = self.open();
         match dir.content.get(&name) {
-            Some(content) if !content.is_file() => Ok(self.cwd.push(name)),
+            Some(content) if !content.is_file() => {
+                self.cwd.push(name);
+                Ok(())
+            }
             Some(_) => Err(FileSystemError(
                 "Given argument is not a directory".to_string(),
             )),
@@ -131,7 +134,7 @@ impl FileSystem {
     }
 }
 
-fn re_match(regex: &str, text: &String, matches: Option<usize>) -> Option<Vec<String>> {
+fn re_match(regex: &str, text: &str, matches: Option<usize>) -> Option<Vec<String>> {
     let re = Regex::new(regex).unwrap();
     if re.is_match(text) {
         match matches {
@@ -154,17 +157,17 @@ fn re_match(regex: &str, text: &String, matches: Option<usize>) -> Option<Vec<St
     }
 }
 
-fn parse_command(text: &String) -> Option<(&'static str, Vec<String>)> {
+fn parse_command(text: &str) -> Option<(&'static str, Vec<String>)> {
     if let Some(args) = re_match(r"\$ cd (.*)", text, Some(1)) {
-        return Some(("cd", args));
-    } else if let Some(_) = re_match(r"\$ ls", text, None) {
-        return None;
+        Some(("cd", args))
+    } else if re_match(r"\$ ls", text, None).is_some() {
+        None
     } else if let Some(args) = re_match(r"dir (.*)", text, Some(1)) {
-        return Some(("dir", args));
+        Some(("dir", args))
     } else if let Some(args) = re_match(r"(\d+) (.*)", text, Some(2)) {
-        return Some(("file", args));
+        Some(("file", args))
     } else {
-        return None;
+        None
     }
 }
 
