@@ -136,8 +136,8 @@ pub fn run_part1(path: String) -> String {
     let_monkeys_play(data, 20).to_string()
 }
 
-pub fn run_part2(path: String) -> String {
-    path
+pub fn run_part2(_: String) -> String {
+    "not implemented".to_string()
 }
 
 #[cfg(test)]

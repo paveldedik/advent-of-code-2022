@@ -1,6 +1,7 @@
 use advent_of_code::day1;
 use advent_of_code::day10;
 use advent_of_code::day11;
+use advent_of_code::day12;
 use advent_of_code::day2;
 use advent_of_code::day3;
 use advent_of_code::day4;
@@ -25,6 +26,7 @@ fn main() {
         ("day9", day9::run_part1, day9::run_part2),
         ("day10", day10::run_part1, day10::run_part2),
         ("day11", day11::run_part1, day11::run_part2),
+        ("day12", day12::run_part1, day12::run_part2),
     ];
     for (name, part1, part2) in days {
         let path = format!("data/{name}.txt");
